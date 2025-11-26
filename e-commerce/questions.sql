@@ -52,12 +52,10 @@ select distinct customers.* from customers where exists (
   and c.name='Electronics' and o.status<>'cancelled' and o.customer_id=customers.id)
 );
 
--- TODO: Review this
 -- Q11. List all products that were ordered but NEVER shipped
 --      (i.e., none of their orders have a shipment row).
-select products.* from products where not exists (
-  (select * from (shipments as s join orders on s.order_id=orders.id) 
-    join order_items on orders.id=order_items.order_id and order_items.product_id=products.id)
+select * from products where exists(
+  select * from orders join order_items on order_items.order_id=orders.id and order_items.product_id=products.id and not exists(select * from shipments where shipments.order_id=orders.id)
 );
 
 -- Q12. List all orders that HAVE a shipment
