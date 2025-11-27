@@ -57,14 +57,26 @@ group by courses.id
 order by courses.id;
 
 -- Q13. List instructors with how many courses they are teaching.
+select instructors.*, count(courses.*) from instructors join courses on courses.instructor_id=instructors.id
+group by instructors.id
+order by instructors.id;
 
 -- Q14. List top 3 highest priced courses.
+select * from courses
+order by price desc
+limit 3;
 
 -- Q15. For each student, show total marks obtained across all submissions.
+select students.*, sum(marks_obtained) from students left join submissions on submissions.student_id=students.id
+group by students.id;
 
 -- Q16. List students who have completed more than 50% progress in any course.
+select full_name, courses.title, enrollments.progress_percent from ((students join enrollments on enrollments.student_id=students.id and enrollments.progress_percent>50) join courses on enrollments.course_id=courses.id);
 
 -- Q17. List courses where the instructor specialization does NOT match course difficulty (e.g., JS instructor teaching Data Science).
+select * from courses where not exists (
+  select * from instructors where courses.instructor_id=instructors.id and CONCAT('%',LOWER(courses.title),'%') like CONCAT('%',LOWER(instructors.specialization),'%')
+);
 
 -- Q18. List all failed or refunded payments with student and course information.
 
