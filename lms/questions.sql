@@ -45,8 +45,16 @@ select * from students where not exists (
 select * from courses where not exists (select * from assignments where assignments.course_id=courses.id);
 
 -- Q11. List students who have enrolled but have NO successful payments.
+select students.full_name, payments.status from (
+  (((students join enrollments on enrollments.student_id=students.id) 
+    join courses on enrollments.course_id=courses.id) 
+      join payments on payments.course_id=courses.id and status<>'success' and payments.student_id=students.id)
+);
 
 -- Q12. Show all courses along with their total revenue (sum of successful payments).
+select courses.id, title, sum(payments.amount) from courses join payments on payments.course_id=courses.id and status='success'
+group by courses.id
+order by courses.id;
 
 -- Q13. List instructors with how many courses they are teaching.
 
