@@ -129,7 +129,9 @@
 -- (Only if specialization doesn't match course topic)
 -- e.g., UI/UX instructor teaching Data Science  
 -- Based on given seed:
--- No mismatches (dataset is clean)
+-- course_id | title            | instructor_id
+-- 2         | Advanced React   | 1  (JavaScript instructor teaching React without "JavaScript" in title)
+-- 5         | Deep Learning    | 3  (Data Science instructor teaching Deep Learning without "Data Science" in title)
 
 
 -- Q18. Failed or refunded payments.

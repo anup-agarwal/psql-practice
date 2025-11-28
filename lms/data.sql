@@ -94,7 +94,7 @@ INSERT INTO instructors (id, full_name, email, specialization) VALUES
 INSERT INTO courses (id, title, instructor_id, price, difficulty, created_at) VALUES
   (1, 'JavaScript Basics', 1, 1500.00, 'beginner',     '2024-02-01'),
   (2, 'Advanced React',    1, 3500.00, 'advanced',     '2024-02-15'),
-  (3, 'UI Design Mastery', 2, 2500.00, 'intermediate', '2024-02-20'),
+  (3, 'UI/UX Design Mastery', 2, 2500.00, 'intermediate', '2024-02-20'),
   (4, 'Data Science 101',  3, 4000.00, 'beginner',     '2024-03-01'),
   (5, 'Deep Learning',     3, 5000.00, 'advanced',     '2024-03-05');
 

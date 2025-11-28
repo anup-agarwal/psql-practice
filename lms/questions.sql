@@ -79,9 +79,18 @@ select * from courses where not exists (
 );
 
 -- Q18. List all failed or refunded payments with student and course information.
+select distinct students.*, payments.status from (
+  ((students join enrollments on enrollments.student_id=students.id)
+    join courses on courses.id=enrollments.course_id join payments on payments.student_id=students.id)
+) where exists (select * from payments where payments.student_id=students.id and status in ('failed','refunded'));
 
 -- Q19. Find the course with the highest total number of lectures + assignments combined.
+WITH t1 as (select courses.*, count(lectures.*) as lecture_count from courses join lectures on lectures.course_id=courses.id group by courses.id), t2 as  (select courses.*, count(assignments.*) as assignment_count from courses join assignments on assignments.course_id=courses.id group by courses.id)
+select t1.id, t1.title, lecture_count+assignment_count as total_count from t1 join t2 on t1.id=t2.id order by total_count desc limit 1;
 
 -- Q20. Using a CTE:
 --      First, calculate total submissions for each student.
 --      Then show only students with more than 2 submissions.
+with t1 as 
+(select students.*, count(submissions.*) as submission_count from students join submissions on submissions.student_id=students.id group by students.id)
+select * from t1 where submission_count>1;
